@@ -134,16 +134,16 @@ const options = {
 
 https.createServer(options, app).listen(443);
 
-// if (process.env.LOCAL_DEVELOPMENT) {
-//   // Slack requires https for OAuth, but locally we want to use http
-//   // to avoid having to maintain our own certificates
-//   https.createServer(options, app).listen(443);
-//   http.createServer(app).listen(10000);
-// } else {
-//   // when we deploy on Vercel, Vercel adds HTTPS for us, so we can just use one port
-//   //console.log("PRODUCT");
-//   https.createServer(options, app).listen(10000);
-// }
+if (process.env.LOCAL_DEVELOPMENT) {
+  // Slack requires https for OAuth, but locally we want to use http
+  // to avoid having to maintain our own certificates
+  https.createServer(options, app).listen(443);
+  http.createServer(app).listen(10000);
+} else {
+  // when we deploy on Vercel, Vercel adds HTTPS for us, so we can just use one port
+  //console.log("PRODUCT");
+  https.createServer(options, app).listen(10000);
+}
 
 // //cities
 app.get("/cities", verifyToken, async (req, res) => {
@@ -337,4 +337,4 @@ app.get("/roles", async (req, res) => {
   }
 });
 
-//module.exports = app;
+module.exports = app;
