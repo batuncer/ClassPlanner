@@ -4,7 +4,7 @@ const { pool } = require("./dbConfig");
 const transporter = nodemailer.createTransport({
   service: "hotmail",
   auth: {
-    user: "thisteamcyf@hotmail.com",
+    user: "classplanner-cyf@hotmail.com",
     pass: process.env.REMINDER_EMAIL_PASSWORD,
   },
 });
@@ -74,7 +74,7 @@ const reminderEmail = async (userId, sessionId) => {
     const emailText = `Hi ${userData.slack_firstname}, this is a reminder for your upcoming class.`;
     const emailHTML = `
       <div style="text-align: center;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Infosys_logo.svg/2560px-Infosys_logo.svg.png" alt="Infosys Logo" style="max-width: 100%;" />
+        <img src="https://codeyourfuture.io/wp-content/uploads/2019/03/cyf_brand.png" alt="Codeyourfuture Logo" style="max-width: 100%;" />
       </div>
       <p>Hi ${userData.slack_firstname},</p>
       <p>I hope this email finds you well. I wanted to confirm that we've received your registration for the upcoming Infosys mentoring class scheduled for <b>${formattedDate}</b>.</p>
@@ -93,7 +93,7 @@ const reminderEmail = async (userId, sessionId) => {
     `;
 
     await transporter.sendMail({
-      from: "thisteamcyf@hotmail.com",
+      from: "classplanner-cyf@hotmail.com",
       to: userData.slack_email,
       subject: emailSubject,
       text: emailText,
