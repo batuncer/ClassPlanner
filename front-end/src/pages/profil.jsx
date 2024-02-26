@@ -26,12 +26,10 @@ export default function Profile() {
                 const response = await axios.get("/profile");
                 /* console.log(response); */
 
-                if (response.statusText !== "OK") {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
+
 
                 const userData = response.data;
-                console.log("user data:::",userData)
+                console.log("user data:::", userData)
                 setUser(userData);
                 setLoading(false);
                 setError(null);
