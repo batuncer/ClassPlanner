@@ -1,9 +1,5 @@
 const { pool } = require("../config/dbConfig");
 const express = require("express");
-const fs = require("fs");
-const path = require('path');
-const https = require("https");
-const http = require("http");
 const { WebClient } = require("@slack/web-api");
 const client_id = process.env.VITE_SLACK_CLIENT_ID;
 const client_secret = process.env.SLACK_CLIENT_SECRET;
@@ -100,22 +96,6 @@ const slackSingUp = async (req, result) => {
   }
 }
 
-const options = {
-  key: fs.readFileSync(path.join(__dirname, './certificates', 'client-key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, './certificates', 'client-cert.pem')),
-};
-
-console.log(options.key)
-if (process.env.LOCAL_DEVELOPMENT) {
-  // Slack requires https for OAuth, but locally we want to use http
-  // to avoid having to maintain our own certificates
-  https.createServer(options, app).listen(443);
-  http.createServer(app).listen(10000);
-} else {
-  // when we deploy on Vercel, Vercel adds HTTPS for us, so we can just use one port
-  //console.log("PRODUCT");
-  https.createServer(options, app).listen(10000);
-}
 
 const userProfile = async (req, res) => {
   try {
