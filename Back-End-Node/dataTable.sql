@@ -33,8 +33,11 @@ CREATE TABLE session (
     date TIMESTAMP,
     time_start TIMESTAMP,
     time_end TIMESTAMP,
-    meeting_link VARCHAR(250),  
-    lesson_content_id INT REFERENCES lesson_content(id),  
+    meeting_link VARCHAR(250),
+    lead_teacher VARCHAR(250),
+    cohort VARCHAR(250),
+    lesson_content_id INT REFERENCES lesson_content(id),
+    region_id INT REFERENCES region(id)
 );
 
 CREATE TABLE attendance (
