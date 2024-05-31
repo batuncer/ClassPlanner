@@ -10,7 +10,7 @@ const reminderEmail = require("../services/reminder");
 const {insertSignUp,updateTitle,createToken,getSignUpDetailsFromDatabase,cancelSignUp} = require("../services/user")
 const app = express();
 
-const slackSingUp = async (req, result) => {
+const slackSingUp = async (req, res) => {
   try {
     const { code } = req.query;
     console.log(redirect_uri);

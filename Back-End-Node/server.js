@@ -23,8 +23,8 @@ app.use("/", cities)
 app.use("/", roles)
 
 const options = {
-  key: fs.readFileSync(`${__dirname}/certificates/client-key.pem`),
-  cert: fs.readFileSync(`${__dirname}/certificates/client-cert.pem`),
+  key: fs.readFileSync(`${__dirname}/certificates/cert.key`),
+  cert: fs.readFileSync(`${__dirname}/certificates/cert.pem`),
 };
 
 if (process.env.LOCAL_DEVELOPMENT) {

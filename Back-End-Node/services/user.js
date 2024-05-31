@@ -1,6 +1,6 @@
 const secret = process.env.JWT_SECRET;
 const jwt = require("jsonwebtoken");
-
+const { pool } = require("../config/dbConfig");
 
 const createToken = (userId, role) => {
     const token = jwt.sign({ id: userId, roles: role }, secret, {
