@@ -19,6 +19,7 @@ const cohorts = require("./routes/cohorts.js")
 const weeks = require("./routes/weeks.js")
 const modules = require("./routes/module.js")
 const moduleNumber = require("./routes/moduleNumbers.js")
+const attendance = require("./routes/attendance.js")
 
 app.use("/", users)
 app.use("/", sessions)
@@ -29,6 +30,7 @@ app.use("/", weeks)
 app.use("/", modules)
 app.use("/", moduleNumber)
 app.use("/", roles)
+app.use("/",attendance )
 
 
 const options = {

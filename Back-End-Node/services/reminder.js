@@ -24,12 +24,26 @@ const getUserData = async (userId) => {
 const getSessionData = async (sessionId) => {
   try {
     const result = await pool.query(
-      "SELECT session.*, lesson_content.* FROM session JOIN lesson_content ON session.lesson_content_id = lesson_content.id WHERE session.id = $1",
+      `SELECT 
+         session.*, 
+         module.name AS module,
+         module_number.number AS module_number,
+         week.number AS week_no
+       FROM 
+         public.session
+       INNER JOIN 
+         public.module ON session.module_id = module.id
+       INNER JOIN 
+         public.module_number ON session.module_number_id = module_number.id
+       INNER JOIN 
+         public.week ON session.week_id = week.id
+       WHERE 
+         session.id = $1`,
       [sessionId]
     );
     return result.rows[0];
   } catch (error) {
-    console.error("Error fetching user data:", error);
+    console.error("Error fetching session data:", error);
     throw error;
   }
 };
@@ -37,7 +51,6 @@ const getSessionData = async (sessionId) => {
 const reminderEmail = async (userId, sessionId) => {
   try {
     const userData = await getUserData(userId);
-
     const sessionData = await getSessionData(sessionId);
 
     // convert date to the format ex: "Tue Dec 05 2023"
@@ -52,7 +65,7 @@ const reminderEmail = async (userId, sessionId) => {
     );
 
     const formattedStartTime = new Date(
-      sessionData.time_start
+      `1970-01-01T${sessionData.time_start}`
     ).toLocaleTimeString("en-GB", {
       hour: "2-digit",
       minute: "2-digit",
@@ -60,15 +73,14 @@ const reminderEmail = async (userId, sessionId) => {
       timeZone: "Europe/London",
     });
 
-    const formattedEndTime = new Date(sessionData.time_end).toLocaleTimeString(
-      "en-GB",
-      {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false,
-        timeZone: "Europe/London",
-      }
-    );
+    const formattedEndTime = new Date(
+      `1970-01-01T${sessionData.time_end}`
+    ).toLocaleTimeString("en-GB", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+      timeZone: "Europe/London",
+    });
 
     const emailSubject = "Class Reminder";
     const emailText = `Hi ${userData.slack_firstname}, this is a reminder for your upcoming class.`;
@@ -82,14 +94,13 @@ const reminderEmail = async (userId, sessionId) => {
       <h2>Class Details:</h2>
       <p><strong>Date:</strong> ${formattedDate}</p>
       <p><strong>Time:</strong> ${formattedStartTime} - ${formattedEndTime}</p>
-      <p><strong>Class Leader:</strong> Add session.who_leading to the session table </p>
+      <p><strong>Class Leader:</strong> ${sessionData.lead_teacher}</p>
       <p><strong>Module and Week:</strong> ${sessionData.module} - ${sessionData.week_no}</p>
       <p><strong>Content Link:</strong> <a href="${sessionData.syllabus_link}">${sessionData.syllabus_link}</a></p>
       <p>Your commitment to participating in our classes is greatly appreciated, and we look forward to an engaging and enriching learning experience.</p>
       <p>If you have any questions or if there are any changes to your availability, please don't hesitate to reach out. Thank you for being a part of CodeYourFuture!</p>
       <p>Best regards,</p>
       <p>Baki Tuncer</p>
-
     `;
 
     await transporter.sendMail({
