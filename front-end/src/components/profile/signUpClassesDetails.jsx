@@ -8,7 +8,7 @@ const SignUpClassesDetails = () => {
     useEffect(() => {
         const fetchSignUpDetails = async () => {
             try {
-                const response = await axios.get("signup-details");
+                const response = await axios.get("/activity");
                 console.log(response)
                 const data = response.data;
                 setSignUpDetails(data);

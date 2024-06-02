@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "../../utils/axios";
-import { TextField, Button, Box, Typography, Container, CssBaseline, MenuItem, Card, CardContent, CardActions } from '@mui/material';
+import { TextField, Button, Box, Typography, Container, CssBaseline, MenuItem } from '@mui/material';
+import SessionCard from '../classes/Class';
 
 const CreateSession = () => {
   const [date, setDate] = useState('');
@@ -8,24 +9,41 @@ const CreateSession = () => {
   const [timeEnd, setTimeEnd] = useState('');
   const [meetingLink, setMeetingLink] = useState('');
   const [leadTeacher, setLeadTeacher] = useState('');
-  const [cohort, setCohort] = useState('');
-  const [module, setModule] = useState('');
-  const [moduleNo, setModuleNo] = useState('');
-  const [region, setRegion] = useState('');
+  const [regionId, setRegionId] = useState('');
+  const [cohortId, setCohortId] = useState('');
+  const [moduleId, setModuleId] = useState('');
+  const [moduleNumberId, setModuleNumberId] = useState('');
+  const [weekId, setWeekId] = useState('');
+  const [syllabusLink, setSyllabusLink] = useState('');
   const [regions, setRegions] = useState([]);
+  const [cohorts, setCohorts] = useState([]);
+  const [modules, setModules] = useState([]);
+  const [moduleNumbers, setModuleNumbers] = useState([]);
+  const [weeks, setWeeks] = useState([]);
   const [sessions, setSessions] = useState([]);
 
   useEffect(() => {
-    // Fetch available regions from the server
-    const fetchRegions = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get('/cities');
-        setRegions(response.data);
+        const regionsResponse = await axios.get('/cities');
+        setRegions(regionsResponse.data);
+
+        const cohortsResponse = await axios.get('/cohorts');
+        setCohorts(cohortsResponse.data);
+
+        const modulesResponse = await axios.get('/modules');
+        setModules(modulesResponse.data);
+
+        const moduleNumbersResponse = await axios.get('/module-numbers');
+        setModuleNumbers(moduleNumbersResponse.data);
+
+        const weeksResponse = await axios.get('/weeks');
+        setWeeks(weeksResponse.data);
       } catch (error) {
-        console.error('There was an error fetching the regions!', error);
+        console.error('Error fetching data:', error);
       }
     };
-    fetchRegions();
+    fetchData();
   }, []);
 
   const handleSubmit = async (e) => {
@@ -37,186 +55,198 @@ const CreateSession = () => {
         time_end: timeEnd,
         meeting_link: meetingLink,
         lead_teacher: leadTeacher,
-        cohort,
-        lesson_content: { module, module_no: moduleNo },
-        region,
+        region_id: regionId,
+        cohort_id: cohortId,
+        module_id: moduleId,
+        module_number_id: moduleNumberId,
+        week_id: weekId,
+        syllabus_link: syllabusLink
       });
       alert('Session created successfully!');
-      setSessions([...sessions, response.data]);
+      setSessions([...sessions, response.data.session]);
     } catch (error) {
-      console.error('There was an error creating the session!', error);
+      console.error('Error creating session:', error);
       alert('Failed to create session.');
     }
   };
 
-  const handlePublish = async (sessionId) => {
-    try {
-      await axios.post(`/publish-session/${sessionId}`);
-      alert('Session published successfully!');
-    } catch (error) {
-      console.error('There was an error publishing the session!', error);
-      alert('Failed to publish session.');
-    }
-  };
-
   return (
-    <Container component="main" maxWidth="sm">
-      <CssBaseline />
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Typography component="h1" variant="h5">
-          Create Session
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="date"
-            label="Date"
-            type="date"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="timeStart"
-            label="Start Time"
-            type="time"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            value={timeStart}
-            onChange={(e) => setTimeStart(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="timeEnd"
-            label="End Time"
-            type="time"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            value={timeEnd}
-            onChange={(e) => setTimeEnd(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="meetingLink"
-            label="Meeting Link"
-            type="url"
-            value={meetingLink}
-            onChange={(e) => setMeetingLink(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="leadTeacher"
-            label="Lead Teacher"
-            value={leadTeacher}
-            onChange={(e) => setLeadTeacher(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="cohort"
-            label="Cohort"
-            value={cohort}
-            onChange={(e) => setCohort(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="module"
-            label="Module"
-            value={module}
-            onChange={(e) => setModule(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="moduleNo"
-            label="Module Number"
-            type="number"
-            value={moduleNo}
-            onChange={(e) => setModuleNo(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="region"
-            label="Region"
-            select
-            value={region}
-            onChange={(e) => setRegion(e.target.value)}
-          >
-            {regions.map((reg) => (
-              <MenuItem key={reg.id} value={reg.name}>
-                {reg.name}
-              </MenuItem>
-            ))}
-          </TextField>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
+    <>
+      <Container component="main" maxWidth="sm">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Typography component="h1" variant="h5">
             Create Session
-          </Button>
+          </Typography>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="date"
+              label="Date"
+              type="date"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="timeStart"
+              label="Start Time"
+              type="time"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              value={timeStart}
+              onChange={(e) => setTimeStart(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="timeEnd"
+              label="End Time"
+              type="time"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              value={timeEnd}
+              onChange={(e) => setTimeEnd(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="meetingLink"
+              label="Meeting Link"
+              type="url"
+              value={meetingLink}
+              onChange={(e) => setMeetingLink(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="leadTeacher"
+              label="Lead Teacher"
+              value={leadTeacher}
+              onChange={(e) => setLeadTeacher(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="syllabusLink"
+              label="Syllabus Link"
+              type="url"
+              value={syllabusLink}
+              onChange={(e) => setSyllabusLink(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="regionId"
+              label="Region"
+              select
+              value={regionId}
+              onChange={(e) => setRegionId(e.target.value)}
+            >
+              {regions.map((region) => (
+                <MenuItem key={region.id} value={region.id}>
+                  {region.name}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="cohortId"
+              label="Cohort"
+              select
+              value={cohortId}
+              onChange={(e) => setCohortId(e.target.value)}
+            >
+              {cohorts.map((cohort) => (
+                <MenuItem key={cohort.id} value={cohort.id}>
+                  {cohort.name}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="moduleId"
+              label="Module"
+              select
+              value={moduleId}
+              onChange={(e) => setModuleId(e.target.value)}
+            >
+              {modules.map((module) => (
+                <MenuItem key={module.id} value={module.id}>
+                  {module.name}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="moduleNumberId"
+              label="Module Number"
+              select
+              value={moduleNumberId}
+              onChange={(e) => setModuleNumberId(e.target.value)}
+            >
+              {moduleNumbers.map((moduleNumber) => (
+                <MenuItem key={moduleNumber.id} value={moduleNumber.id}>
+                  {moduleNumber.number}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="weekId"
+              label="Week"
+              select
+              value={weekId}
+              onChange={(e) => setWeekId(e.target.value)}
+            >
+              {weeks.map((week) => (
+                <MenuItem key={week.id} value={week.id}>
+                  {week.number}
+                </MenuItem>
+              ))}
+            </TextField>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Create Session
+            </Button>
+          </Box>
         </Box>
-      </Box>
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Typography component="h1" variant="h5">
-          Sessions
-        </Typography>
-        {sessions.map((session) => (
-          <Card key={session.id} sx={{ mt: 3, width: '100%' }}>
-            <CardContent>
-              <Typography variant="h6">Date: {session.date}</Typography>
-              <Typography variant="h6">Start Time: {session.time_start}</Typography>
-              <Typography variant="h6">End Time: {session.time_end}</Typography>
-              <Typography variant="h6">Meeting Link: {session.meeting_link}</Typography>
-              <Typography variant="h6">Lead Teacher: {session.lead_teacher}</Typography>
-              <Typography variant="h6">Cohort: {session.cohort}</Typography>
-              <Typography variant="h6">Module: {session.lesson_content.module}</Typography>
-              <Typography variant="h6">Module No: {session.lesson_content.module_no}</Typography>
-              <Typography variant="h6">Region: {session.region}</Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small" onClick={() => handlePublish(session.id)}>Publish</Button>
-            </CardActions>
-          </Card>
-        ))}
-      </Box>
-    </Container>
+      </Container>
+
+    </>
   );
 };
 

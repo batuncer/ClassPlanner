@@ -1,9 +1,12 @@
 import React from "react";
-import CreateLesson from "../components/admin/Create-lesson";
+import CreateSession from "../components/admin/Create-session";
 
 
 export const Admin = () => {
     return (
-        <CreateLesson />
+        <div>
+            <CreateSession />
+        </div>
+
     )
 }

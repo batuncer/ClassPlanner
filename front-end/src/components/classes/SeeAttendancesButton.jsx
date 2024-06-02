@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import axios from "../../utils/axios"
+
 const SeeAttendancesButton = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [attendances, setAttendances] = useState([]);
-
     
     const handleButtonClick = async () => {
         const sessionId = props.sessionId;
@@ -12,15 +12,12 @@ const SeeAttendancesButton = (props) => {
         try {
             const body = {
                 sessionId: sessionId,
-     
             }
-
             const response = await axios.get(`/attendance/${sessionId}`, body);
 
             if (response.status !== 200) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-
             const attendanceData = response.data;
             setAttendances(attendanceData);
             setModalVisible(true);
@@ -55,7 +52,7 @@ const SeeAttendancesButton = (props) => {
                 </Modal.Header>
                 <Modal.Body>
                     <b>Who is leading: </b>
-                    {props.whoLeading}
+                    {props.lead_teacher}
                 </Modal.Body>
                 <Modal.Body>{attendances.map((attendance) => (
                     <div key={attendance.id}>
