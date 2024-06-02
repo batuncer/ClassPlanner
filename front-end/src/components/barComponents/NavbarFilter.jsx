@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+// MultipleSelectCheckmarks.js
+import React, { useEffect, useState } from 'react';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -20,9 +21,9 @@ const MenuProps = {
     },
 };
 
-export default function MultipleSelectCheckmarks({ onSelectCities }) {
-    const [selectedCities, setSelectedCities] = useState([]);
-    const [cityData, setCityData] = useState([]);
+export default function MultipleSelectCheckmarks({ onSelectRegions }) {
+    const [selectedRegions, setSelectedRegions] = useState([]);
+    const [regionData, setRegionData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { isAuthenticated } = useAuthContext();
@@ -38,12 +39,12 @@ export default function MultipleSelectCheckmarks({ onSelectCities }) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
-                const dataCity = response.data;
-                setCityData(dataCity);
+                const dataRegions = response.data;
+                setRegionData(dataRegions);
                 setError(null);
             } catch (error) {
-                console.error("Error fetching city data:", error);
-                setError("Error fetching city data. Please try again later.");
+                console.error("Error fetching region data:", error);
+                setError("Error fetching region data. Please try again later.");
             } finally {
                 setLoading(false);
             }
@@ -54,24 +55,24 @@ export default function MultipleSelectCheckmarks({ onSelectCities }) {
         }
     }, [isAuthenticated]);
 
-    const handleChangeCity = (event) => {
+    const handleChangeRegions = (event) => {
         const { value } = event.target;
-        setSelectedCities(value);
-        onSelectCities(value); 
+        setSelectedRegions(value);
+        onSelectRegions(value);
     };
 
     return (
         <div>
             <FormControl sx={{ m: 1, width: 300 }}>
                 <InputLabel style={{ color: 'white' }} id="demo-multiple-checkbox-label">
-                    Country
+                    Region
                 </InputLabel>
                 <Select
                     labelId="demo-multiple-checkbox-label"
                     id="demo-multiple-checkbox"
                     multiple
-                    value={selectedCities}
-                    onChange={handleChangeCity}
+                    value={selectedRegions}
+                    onChange={handleChangeRegions}
                     input={<OutlinedInput label="Tag" sx={{ borderColor: 'white' }} />}
                     renderValue={(selected) => selected.join(', ')}
                     MenuProps={MenuProps}
@@ -79,15 +80,14 @@ export default function MultipleSelectCheckmarks({ onSelectCities }) {
                     {loading && <MenuItem disabled>Loading...</MenuItem>}
                     {error && <MenuItem disabled>Error: {error}</MenuItem>}
                     {!loading &&
-                        cityData.map((city) => (
-                            <MenuItem key={city.id} value={city.name}>
-                                <Checkbox checked={selectedCities.indexOf(city.name) > -1} />
-                                <ListItemText primary={city.name} />
+                        regionData.map((region) => (
+                            <MenuItem key={region.id} value={region.name}>
+                                <Checkbox checked={selectedRegions.indexOf(region.name) > -1} />
+                                <ListItemText primary={region.name} />
                             </MenuItem>
                         ))}
                 </Select>
             </FormControl>
-   
         </div>
     );
 }

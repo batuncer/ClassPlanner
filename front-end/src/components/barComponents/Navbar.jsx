@@ -65,7 +65,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const Navbar = ({onChangeSearch}) => {
+const Navbar = ({onChangeSearch,onSelectRegions }) => {
     const { logout } = useAuthContext();
     const handleLogout = () => {
         logout();
@@ -94,7 +94,7 @@ const Navbar = ({onChangeSearch}) => {
                 }}
             >
                 <Toolbar>
-                    <NavbarFilter />
+                    <NavbarFilter onSelectRegions={onSelectRegions}/>
                     <Search>
                         <SearchIconWrapper>
                             <SearchIcon />
