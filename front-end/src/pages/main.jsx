@@ -26,6 +26,7 @@ const Main = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { isAuthenticated } = useAuthContext();
+    const [searchData, setSearchData] = useState([]);
 
     useEffect(() => {
         const fetchSessions = async () => {
@@ -35,6 +36,7 @@ const Main = () => {
                 setData(sessionsData);
                 setLoading(false);
                 setError(null);
+                setSearchData(sessionsData)
             } catch (error) {
                 console.error('Error fetching data:', error);
                 setError('Error fetching data');
@@ -47,10 +49,17 @@ const Main = () => {
         }
     }, [isAuthenticated]);
 
+    const search_handler = (text) => {
+        const lowerCaseText = text.toLowerCase();
+        setData(searchData.filter(e => text === "" || (e.module.toLowerCase().includes(lowerCaseText) || e.region.toLowerCase().includes(lowerCaseText))  ))
+    }
+
+
+    
     return (
         <UserGuard>
             <div className="main-container" style={{ marginTop: "200px" }}>
-                <Navbar />
+                <Navbar onChangeSearch={search_handler} />
                 {loading && <div>Loading...</div>}
                 {error && <div>Error: {error}</div>}
                 {!loading && data.map((s) => (

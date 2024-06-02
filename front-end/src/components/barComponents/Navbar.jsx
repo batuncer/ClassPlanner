@@ -65,7 +65,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const Navbar = () => {
+const Navbar = ({onChangeSearch}) => {
     const { logout } = useAuthContext();
     const handleLogout = () => {
         logout();
@@ -102,6 +102,7 @@ const Navbar = () => {
                         <StyledInputBase
                             placeholder="Search…"
                             inputProps={{ 'aria-label': 'search' }}
+                            onChange={(e) => onChangeSearch(e.target.value)}
                         />
                     </Search>
                     <Box sx={{ flexGrow: 1 }} />
