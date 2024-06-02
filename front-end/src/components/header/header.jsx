@@ -4,6 +4,9 @@ import Typography from '@mui/material/Typography';
 import { /* specific components or styles */ } from '@material-ui/core';
 
 const Header = () => {
+  const handleLogoClick = () => {
+    window.location.href = '/main';
+  };
   return (
     <div>
       <AppBar position="fixed" >
@@ -11,6 +14,7 @@ const Header = () => {
           <img
             src="https://codeyourfuture.io/wp-content/uploads/2019/03/cyf_brand.png"
             style={{ height: '90px', margin: '5px 0px' }}
+            onClick={handleLogoClick}
           />
           <Typography variant="h2"
             component="div"

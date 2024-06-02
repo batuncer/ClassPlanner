@@ -22,14 +22,8 @@ export default function Profile() {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-
                 const response = await axios.get("/profile");
-                /* console.log(response); */
-
-
-
                 const userData = response.data;
-                console.log("user data:::", userData)
                 setUser(userData);
                 setLoading(false);
                 setError(null);
@@ -49,7 +43,6 @@ export default function Profile() {
     return (
         <UserGuard>
             <div>
-                <Navbar />
                 {loading && <div>Loading...</div>}
                 {error && <div>Error: {error}</div>}
                 {!loading && <ProfileDetails user={user} />}
