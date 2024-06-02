@@ -48,6 +48,8 @@ const SignUpLessonButton = (props) => {
             }
             const response = await axios.post("insert-signup", body);
             const data = response.data;
+            setModalVisible(false);
+            alert("You registered succesfully. Good Luck with your class!")
         } catch (error) {
             console.error("Error insert sign-up :", error);
         }
@@ -88,7 +90,7 @@ const SignUpLessonButton = (props) => {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="primary" onClick={handleSignUpSubmit}>
+                    <Button variant="primary" onClick={handleSignUpSubmit} >
                         Submit
                     </Button>
                 </Modal.Footer>
