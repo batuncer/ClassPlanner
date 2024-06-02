@@ -20,7 +20,7 @@ const MenuProps = {
     },
 };
 
-export default function MultipleSelectCheckmarks() {
+export default function MultipleSelectCheckmarks({ onSelectCities }) {
     const [selectedCities, setSelectedCities] = useState([]);
     const [cityData, setCityData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -30,7 +30,7 @@ export default function MultipleSelectCheckmarks() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                setLoading(true); // Set loading to true when starting the fetch
+                setLoading(true);
 
                 const response = await axios.get("/cities");
 
@@ -45,7 +45,7 @@ export default function MultipleSelectCheckmarks() {
                 console.error("Error fetching city data:", error);
                 setError("Error fetching city data. Please try again later.");
             } finally {
-                setLoading(false); // Set loading to false regardless of success or failure
+                setLoading(false);
             }
         };
 
@@ -54,13 +54,10 @@ export default function MultipleSelectCheckmarks() {
         }
     }, [isAuthenticated]);
 
-    const handleChange = (event) => {
-        const {
-            target: { value },
-        } = event;
-        setSelectedCities(
-            typeof value === 'string' ? value.split(',') : value
-        );
+    const handleChangeCity = (event) => {
+        const { value } = event.target;
+        setSelectedCities(value);
+        onSelectCities(value); 
     };
 
     return (
@@ -74,7 +71,7 @@ export default function MultipleSelectCheckmarks() {
                     id="demo-multiple-checkbox"
                     multiple
                     value={selectedCities}
-                    onChange={handleChange}
+                    onChange={handleChangeCity}
                     input={<OutlinedInput label="Tag" sx={{ borderColor: 'white' }} />}
                     renderValue={(selected) => selected.join(', ')}
                     MenuProps={MenuProps}
@@ -90,6 +87,7 @@ export default function MultipleSelectCheckmarks() {
                         ))}
                 </Select>
             </FormControl>
+   
         </div>
     );
 }

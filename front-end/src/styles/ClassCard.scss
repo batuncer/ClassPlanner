@@ -17,11 +17,14 @@
 	position: relative;
 
 	@media screen and (max-width: 1178px) {
-		max-width: 680px;
-		height: 400px;
+		min-height: 500px;
+		height: auto;
+		margin: 180px auto;
+		margin-top: 300px;
+
 	}
 
-	@media screen and (max-width: 768px) {
+	@media screen and (max-width: 1178px) {
 		min-height: 500px;
 		height: auto;
 		margin: 180px auto;
@@ -35,7 +38,7 @@
 		display: flex;
 		align-items: center;
 
-		@media screen and (max-width: 768px) {
+		@media screen and (max-width: 1178px) {
 			flex-direction: column;
 		}
 	}
@@ -43,7 +46,7 @@
 	.blog-slider__item> :nth-child(2) {
 		margin-left: 30px;
 
-		@media screen and (max-width: 750px) {
+		@media screen and (max-width: 1178px) {
 			margin-left: initial;
 		}
 	}
@@ -70,7 +73,7 @@
 			opacity: 0.8;
 		}
 
-		@media screen and (max-width: 992px) {
+		@media screen and (max-width: 1178px) {
 			width: 45%;
 		}
 

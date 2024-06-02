@@ -31,9 +31,10 @@ const ClassCard = (props) => {
                 <div className="blog-slider__content">
                     <div className="blog-slider__title">{props.module_name} {props.module_number}</div>
                     <div className="blog-slider__text"></div>
-                    <div style={{ color: "white" }}>{props.syllabus_link}</div>
-                    <div>
-                        {props.city} / {props.cohort}
+                    <div style={{ color: "white" }}>  <span style={{ fontWeight: "bold", color: ' #36454f' }}>Syllabus Link: </span>
+                        {props.syllabus_link}</div>
+                    <div style={{ color: "white" }}>
+                        <span style={{ fontWeight: "bold", color: ' #36454f' }}>Region/Cohort:  </span>  {props.city} / {props.cohort}
                     </div>
 
                     <div>
