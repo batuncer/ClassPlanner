@@ -6,6 +6,8 @@ import ClassCard from "../components/classes/ClassCard";
 import UserGuard from "../auth/UserGuard";
 import axios from '../utils/axios';
 import { useAuthContext } from "../auth/useAutContext";
+import Skeleton from '@mui/material/Skeleton';
+import "../styles/ClassCard.scss";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -19,6 +21,18 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    skeletonContainer: {
+        width: '80%',
+        margin: 'auto',
+        background: '#9da9ad',
+        boxShadow: '0px 14px 80px rgba(34, 35, 58, 0.2)',
+        padding: '25px',
+        borderRadius: '25px',
+        height: '300px',
+        transition: 'all 0.3s',
+        marginTop: '50px',
+        position: 'relative',
+    }
 }));
 
 const Main = () => {
@@ -63,7 +77,11 @@ const Main = () => {
         <UserGuard>
             <div className="main-container" style={{ marginTop: "200px" }}>
                 <Navbar onChangeSearch={searchHandler} onSelectRegions={regionBoxHandler} />
-                {loading && <div>Loading...</div>}
+                {loading &&  Array.from(new Array(6)).map((_, index) => (
+                        <div key={index} className={classes.skeletonContainer}>
+                            <Skeleton animation="wave"  variant="rectangular" width="100%" height="100%" />
+                        </div>
+                    ))}
                 {error && <div>Error: {error}</div>}
                 {!loading && data
                     .filter(s => selectedRegions.length === 0 || selectedRegions.includes(s.region))

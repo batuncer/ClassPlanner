@@ -37,7 +37,7 @@ ClassPlanner is a web application designed to manage and organize class sessions
 ### 4. Role Sign-up
 * **As a user,** sign up for a role in the class using your full name and email address.
 * Each role can have multiple people fulfilling it in a class. The roles are:
-  * **Coordinator** (4)
+  * **Coordinator** 
   * **Lead Teacher** (1)
   * **Assistant Lead Teacher** (5)
   * **Teaching Assistant** (6)
