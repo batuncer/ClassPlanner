@@ -33,25 +33,25 @@ app.use("/", roles)
 app.use("/",attendance )
 
 
-// const options = {
-//   key: fs.readFileSync(`${__dirname}/certificates/cert.key`),
-//   cert: fs.readFileSync(`${__dirname}/certificates/cert.pem`),
-// };
+const options = {
+  key: fs.readFileSync(`${__dirname}/certificates/cert.key`),
+  cert: fs.readFileSync(`${__dirname}/certificates/cert.pem`),
+};
 
-// if (process.env.LOCAL_DEVELOPMENT) {
-//   // Slack requires https for OAuth, but locally we want to use http
-//   // to avoid having to maintain our own certificates
-//   https.createServer(options, app).listen(443);
-//   http.createServer(app).listen(10000);
-// } else {
-//   // when we deploy on Vercel, Vercel adds HTTPS for us, so we can just use one port
-//   //console.log("PRODUCT");
-//   https.createServer(options, app).listen(10000);
-// }
+if (process.env.LOCAL_DEVELOPMENT) {
+  // Slack requires https for OAuth, but locally we want to use http
+  // to avoid having to maintain our own certificates
+  https.createServer(options, app).listen(443);
+  http.createServer(app).listen(10000);
+} else {
+  // when we deploy on Vercel, Vercel adds HTTPS for us, so we can just use one port
+  //console.log("PRODUCT");
+  https.createServer(options, app).listen(10000);
+}
 
 
 // app.listen(PORT, () => {
 //   console.log(`Server is running on port ${PORT}`);
 // });
 
-module.exports = app;
+// module.exports = app;

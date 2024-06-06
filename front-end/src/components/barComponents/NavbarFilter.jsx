@@ -35,7 +35,7 @@ export default function MultipleSelectCheckmarks({ onSelectRegions }) {
 
                 const response = await axios.get("/cities");
 
-                if (response.statusText !== "OK") {
+                if (response.status !== 200) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 

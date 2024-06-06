@@ -2,6 +2,7 @@
 
 ## Table of Contents
 * [General Info](#general-info)
+* [Development Process](#development-process-info)
 * [Features](#features)
 * [Technologies](#technologies)
 * [Setup](#setup)
@@ -9,6 +10,13 @@
 ## General Info
 ClassPlanner is a web application designed to manage and organize class sessions. It allows users to view upcoming classes, sign up for roles, and for admins to add new lessons and manage sign-ups.
 
+## Development Process
+  * **Code Refactoring:** Significant effort has been put into refactoring the existing codebase to enhance its structure and readability. This includes adhering to best practices for clean code and improving the overall maintainability of the application.
+  * **Route Optimization:** Routes have been streamlined and optimized to reduce redundancy and improve the efficiency of the application's navigation.
+  * **Admin Function Enhancements:**New functionalities have been added for administrators to provide them with more control and flexibility in managing classes 
+  * **Filter Function Improvements:**The filtering logic has been revisited and optimized to allow users to more easily find classes that meet their specific needs.
+  * **Database Schema Updates:** Database tables have been modified to better support the application's new features and functionalities. This includes adding new tables for enhanced role management, updating existing tables for better data integrity, and optimizing table relationships for improved query performance.
+  
 ## Features
 ### 1. Overview of Upcoming Classes
 * **As a user,** view an overview of all upcoming classes.
@@ -34,7 +42,8 @@ ClassPlanner is a web application designed to manage and organize class sessions
   * **Personal Development Rep** (2)
 
 ### 5. User/Admin: View Sign-ups
-* **As an admin,** view the full names and email addresses of the people signed up for each course.
+* **As an admin, user** view the full names and email addresses of the people signed up for each course.
+* **As an admin, user** filter by region and, Search with module name and region.
 
 ### 6. Admin: Add New Lessons
 * **As an admin,** add new lessons that admin can create a session with locations and  cohort.
@@ -50,6 +59,7 @@ Project is created with:
 * **Authentication:** JWT, Slack Authentication
 * **Email Service:** Nodemailer
 * **Unique Identifiers:** UUID
+* **Router :** React Router and EWxpress Routing
 
 ## Setup
 
@@ -83,6 +93,7 @@ CREATE TABLE person (
     slack_email VARCHAR(250) UNIQUE,
     slack_title VARCHAR(250),
 );
+
 ### Region Table
 CREATE TABLE region (
     id SERIAL PRIMARY KEY,
@@ -90,16 +101,6 @@ CREATE TABLE region (
 );
 
 
-### Lesson Content Table
-```sql
-CREATE TABLE lesson_content (
-    id SERIAL PRIMARY KEY,
-    module VARCHAR(250),
-    module_no INT,
-    week_no INT,
-    lesson_topic VARCHAR(250),
-    syllabus_link VARCHAR(250)
-);
 
 ### Session Table
 ```sql
@@ -109,8 +110,14 @@ CREATE TABLE session (
     time_start TIMESTAMP,
     time_end TIMESTAMP,
     meeting_link VARCHAR(250),
+    syllabus_link VARCHAR(250),
     lead_teacher VARCHAR(250),
     lesson_content_id INT REFERENCES lesson_content(id)
+    region_id INT REFERENCES region(id),
+    cohort_id INT REFERENCES cohort(id),
+    week_id INT REFERENCES week(id),
+    module_id INT REFERENCES module(id),
+    module_number_id INT REFERENCES module_number(id),
 );
 
 
@@ -119,6 +126,30 @@ CREATE TABLE role (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) UNIQUE
     
+);
+
+### Week Table
+CREATE TABLE week (
+    id SERIAL PRIMARY KEY,
+    number INT UNIQUE
+);
+
+### Module Table
+CREATE TABLE module (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) UNIQUE
+);
+
+### Module Number Table
+CREATE TABLE module_number (
+    id SERIAL PRIMARY KEY,
+    number INT UNIQUE
+);
+
+### Cohort Table
+CREATE TABLE cohort (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) UNIQUE
 );
 
 ### Attendance Table

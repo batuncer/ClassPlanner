@@ -125,7 +125,6 @@ export function AuthProvider({ children }) {
 
         setSession(token);
         const user = JSON.parse(atob(token.split('.')[1]));
-
         dispatch({
             type: TYPE_LOGIN,
             payload: {
