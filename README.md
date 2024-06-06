@@ -13,13 +13,15 @@ ClassPlanner is a web application designed to manage and organize class sessions
 ## Development Process
   * **Code Refactoring:** Significant effort has been put into refactoring the existing codebase to enhance its structure and readability. This includes adhering to best practices for clean code and improving the overall maintainability of the application.
   * **Route Optimization:** Routes have been streamlined and optimized to reduce redundancy and improve the efficiency of the application's navigation.
-  * **Admin Function Enhancements:**New functionalities have been added for administrators to provide them with more control and flexibility in managing classes 
-  * **Filter Function Improvements:**The filtering logic has been revisited and optimized to allow users to more easily find classes that meet their specific needs.
+  * **Admin Function Enhancements:** New functionalities have been added for administrators to provide them with more control and flexibility in managing classes 
+  * **Filter Function Improvements:** The filtering logic has been revisited and optimized to allow users to more easily find classes that meet their specific needs.
   * **Database Schema Updates:** Database tables have been modified to better support the application's new features and functionalities. This includes adding new tables for enhanced role management, updating existing tables for better data integrity, and optimizing table relationships for improved query performance.
-  
+
 ## Features
 ### 1. Overview of Upcoming Classes
 * **As a user,** view an overview of all upcoming classes.
+* **As a user,** register for classes.
+* **As a user,** See profile details, view registration history, and cancel registered classes.
 
 ### 2. Details of Next Upcoming Class
 * **As a user,** see the next upcoming class, including:
@@ -85,6 +87,7 @@ LOCAL_DEVELOPMENT=true
 
 ## DATABASE SHEMA
 ### Person Table
+```sql
 CREATE TABLE person (
     id SERIAL PRIMARY KEY,
     slack_photo_link VARCHAR(250),
@@ -95,6 +98,7 @@ CREATE TABLE person (
 );
 
 ### Region Table
+```sql
 CREATE TABLE region (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) UNIQUE
