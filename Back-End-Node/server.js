@@ -54,4 +54,4 @@ if (process.env.LOCAL_DEVELOPMENT) {
 //   console.log(`Server is running on port ${PORT}`);
 // });
 
-// module.exports = app;
+module.exports = app;
