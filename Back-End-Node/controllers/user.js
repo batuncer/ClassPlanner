@@ -96,6 +96,24 @@ const slackSingUp = async (req, res) => {
   }
 }
 
+const login = async (req, res) => {
+  const { slack_email } = req.body;
+  console.log(req)
+  try {
+    const userQuery = await pool.query("SELECT * FROM person WHERE slack_email = $1", [slack_email]);
+    const user = userQuery.rows[0];
+
+    if (!user) {
+      return res.status(401).json({ error: "Invalid email" });
+    }
+    console.log(userQuery)
+    const token = createToken(user.id, user.role);
+    return res.json({ token });
+  } catch (error) {
+    console.error("Error during login process:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
 
 const userProfile = async (req, res) => {
   try {
@@ -183,5 +201,6 @@ module.exports = {
   userActivity,
   registerSession,
   cancelRegister,
+  login
 
 }

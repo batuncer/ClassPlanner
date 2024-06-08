@@ -5,11 +5,12 @@ import Box from '@mui/material/Box';
 import BottomCard from "../components/main-bottom/BottomCard"
 import LoginGuard from "../auth/LoginGuard";
 import { useAuthContext } from "../auth/useAutContext";
+import Guest from "../components/auth-components/Guest";
 
 
 export default function SignUp() {
     const navigate = useNavigate();
-    const { loginWithSlack, register } = useAuthContext();
+    const { loginWithSlack, loginGuest } = useAuthContext();
 
     const handleSignup = () => {
         navigate("/main");
@@ -19,11 +20,17 @@ export default function SignUp() {
         loginWithSlack(token);
     }
 
+    const handleLogin = async (email) => {
+        await loginGuest(email);
+        navigate("/main");
+    };
+
     return (
         <LoginGuard>
             <Box >
                 <div>
                     <SignUpForm handleSignup={handleSignup} handleSlackSignup={handleSlackSignup} />
+                    <Guest  handleLogin={handleLogin} />
                 </div>
                 <div style={{ border: "1px solid grey", marginRight: "200px", marginLeft:"200px", marginBottom: "90px" }}></div>
                 <div style={{ display: 'flex', gap: '20px', justifyContent: 'center'}}>

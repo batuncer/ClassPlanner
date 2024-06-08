@@ -116,9 +116,24 @@ export function AuthProvider({ children }) {
     }, [initialize]);
 
     // LOGIN
-    const login = async (email, password) => {
-
-    };
+    const loginGuest = async (slack_email) => {
+        try {
+            const response = await axios.post('/login', { slack_email }); 
+            const { token } = response.data;
+        
+            setSession(token);
+            const user = JSON.parse(atob(token.split('.')[1])); 
+            
+            dispatch({
+                type: TYPE_LOGIN,
+                payload: {
+                    user: user,
+                },
+            });
+          } catch (error) {
+            console.error('Error during guest login:', error);
+          }
+      };
 
     // LOGIN
     const loginWithSlack = async (token) => {
@@ -175,10 +190,10 @@ export function AuthProvider({ children }) {
             value={{
                 ...state,
                 method: 'jwt',
-                login,
                 logout,
                 register,
-                loginWithSlack
+                loginWithSlack,
+                loginGuest
 
             }}
         >
