@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import BottomCard from "../components/main-bottom/BottomCard"
 import LoginGuard from "../auth/LoginGuard";
 import { useAuthContext } from "../auth/useAutContext";
-import Guest from "../components/auth-components/Guest";
 
 
 export default function SignUp() {
