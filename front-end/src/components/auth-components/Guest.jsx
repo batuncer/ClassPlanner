@@ -5,7 +5,7 @@ const Guest = ({ handleLogin }) => {
 
     return (
         <div>
-            <Button variant="contained" color="success" onClick={() => handleLogin("guest@gmail.com")}>
+            <Button sx={{ margin: "30px" }} variant="contained" color="success" onClick={() => handleLogin("guest@gmail.com")}>
                 Login as a Guest
             </Button>
         </div>

@@ -42,6 +42,7 @@ export default function Profile() {
 
     return (
         <UserGuard>
+            <Navbar hideSearch /> 
             <div>
                 {loading && <div>Loading...</div>}
                 {error && <div>Error: {error}</div>}

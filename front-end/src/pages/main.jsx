@@ -32,7 +32,11 @@ const useStyles = makeStyles((theme) => ({
         transition: 'all 0.3s',
         marginTop: '50px',
         position: 'relative',
-    }
+    },
+    mainContainer: {
+        marginTop: '200px', // Adjust as needed
+        minHeight: 'calc(100vh - 200px)', // Subtracting the height of Navbar
+    },
 }));
 
 const Main = () => {
@@ -75,7 +79,7 @@ const Main = () => {
     
     return (
         <UserGuard>
-            <div className="main-container" style={{ marginTop: "200px" }}>
+            <div className={classes.mainContainer} style={{ marginTop: "200px" }}>
                 <Navbar onChangeSearch={searchHandler} onSelectRegions={regionBoxHandler} />
                 {loading &&  Array.from(new Array(6)).map((_, index) => (
                         <div key={index} className={classes.skeletonContainer}>

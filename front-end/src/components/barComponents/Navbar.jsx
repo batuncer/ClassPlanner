@@ -65,7 +65,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const Navbar = ({onChangeSearch,onSelectRegions }) => {
+const Navbar = ({onChangeSearch,onSelectRegions, hideSearch = false  }) => {
     const { logout } = useAuthContext();
     const handleLogout = () => {
         logout();
@@ -94,6 +94,8 @@ const Navbar = ({onChangeSearch,onSelectRegions }) => {
                 }}
             >
                 <Toolbar>
+                {!hideSearch &&(
+                    <>
                     <NavbarFilter onSelectRegions={onSelectRegions}/>
                     <Search>
                         <SearchIconWrapper>
@@ -105,6 +107,8 @@ const Navbar = ({onChangeSearch,onSelectRegions }) => {
                             onChange={(e) => onChangeSearch(e.target.value)}
                         />
                     </Search>
+                    </>
+)}
                     <Box sx={{ flexGrow: 1 }} />
                     <AdminButton />
                     <Hidden mdUp>

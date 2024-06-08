@@ -2,9 +2,10 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import SlackLoginButton from "./SlackLoginButton";
+import Guest from "./Guest";
 
 
-export default function SignUpForm({ handleSlackSignup }) {
+export default function SignUpForm({ handleSlackSignup, handleLogin }) {
     return (
         <Container style={{ display: 'flex', marginTop: "120px", flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
             <div>
@@ -30,8 +31,12 @@ export default function SignUpForm({ handleSlackSignup }) {
                         alert(error);
                     }}
                 />
+                 <Guest  handleLogin={handleLogin}
+                      onError={(error) => {
+                        alert(error);
+                    }} />
                 </div>
-            </div>
+            </div> 
         </Container>
     );
 }

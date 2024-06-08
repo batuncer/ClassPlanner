@@ -29,8 +29,7 @@ export default function SignUp() {
         <LoginGuard>
             <Box >
                 <div>
-                    <SignUpForm handleSignup={handleSignup} handleSlackSignup={handleSlackSignup} />
-                    <Guest  handleLogin={handleLogin} />
+                    <SignUpForm handleSignup={handleSignup} handleSlackSignup={handleSlackSignup} handleLogin={handleLogin} />
                 </div>
                 <div style={{ border: "1px solid grey", marginRight: "200px", marginLeft:"200px", marginBottom: "90px" }}></div>
                 <div style={{ display: 'flex', gap: '20px', justifyContent: 'center'}}>
