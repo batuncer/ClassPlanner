@@ -1,8 +1,8 @@
-const { pool } = require("../config/dbConfig");
+const {executeQuery } = require("../config/dbConfig");
 
 const sessions = async (req, res) => {
   try {
-    const result = await pool.query(`
+    const result = await executeQuery(`
       SELECT
         session.id,
         session.date,
@@ -47,7 +47,7 @@ const createSession = async (req, res) => {
     `;
     const sessionValues = [date, time_start, time_end, meeting_link, lead_teacher, region_id, cohort_id, module_id, module_number_id, week_id, syllabus_link];
 
-    const sessionResult = await pool.query(sessionQuery, sessionValues);
+    const sessionResult = await executeQuery(sessionQuery, sessionValues);
     res.status(201).json({
       message: 'Session added successfully',
       session: sessionResult.rows[0],

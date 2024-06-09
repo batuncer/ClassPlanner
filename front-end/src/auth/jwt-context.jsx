@@ -77,7 +77,6 @@ export function AuthProvider({ children }) {
             const accessToken = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '';
 
 
-
             if (accessToken) {
                 setSession(accessToken);
                 const user = JSON.parse(atob(accessToken.split('.')[1]));

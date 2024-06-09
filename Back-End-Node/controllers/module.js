@@ -1,8 +1,8 @@
-const { pool } = require("../config/dbConfig");
+const {executeQuery } = require("../config/dbConfig");
 
 const modules = async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM module");
+    const result = await executeQuery("SELECT * FROM module");
     const modules = result.rows.map((module) => ({ id: module.id, name: module.name }));
     res.json(modules);
   } catch (error) {

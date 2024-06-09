@@ -1,8 +1,8 @@
-const { pool } = require("../config/dbConfig");
+const { executeQuery } = require("../config/dbConfig");
 
 const roles = async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM role");
+    const result = await executeQuery("SELECT * FROM role");
     const roles = result.rows.map((role) => ({ id: role.id, name: role.name }));
     res.json(roles);
   } catch (error) {

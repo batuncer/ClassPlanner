@@ -30,4 +30,22 @@ pool.query(query, (err, result) => {
   }
 });
 
-module.exports = { pool };
+
+const executeQuery = async (queryString,queryParams)  => {
+
+  const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  });
+
+  const client = await pool.connect();
+  const result = await client.query(queryString,queryParams)
+  client.release()
+
+  return result
+
+}
+
+module.exports = { pool,executeQuery };

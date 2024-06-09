@@ -28,7 +28,7 @@ const slackSingUp = async (req, res) => {
       token: result.authed_user.access_token,
     });
 
-    const existingUser = await pool.query(
+    const existingUser = await executeQuery(
       "SELECT * FROM person WHERE slack_email = $1",
       [userProfile["profile"]["email"]]
     );
@@ -100,7 +100,7 @@ const login = async (req, res) => {
   const { slack_email } = req.body;
   console.log(req)
   try {
-    const userQuery = await pool.query("SELECT * FROM person WHERE slack_email = $1", [slack_email]);
+    const userQuery = await executeQuery("SELECT * FROM person WHERE slack_email = $1", [slack_email]);
     const user = userQuery.rows[0];
 
     if (!user) {
@@ -120,7 +120,7 @@ const userProfile = async (req, res) => {
     const userId = req.userId;
 
     // Fetch user profile details from the database
-    const userProfile = await pool.query(
+    const userProfile = await executeQuery(
       "SELECT id, slack_firstname, slack_lastname, slack_email, slack_title, slack_photo_link FROM person WHERE id = $1",
       [userId]
     );
