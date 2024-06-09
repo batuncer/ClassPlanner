@@ -1,4 +1,4 @@
-const { pool } = require("../config/dbConfig");
+const { pool, executeQuery } = require("../config/dbConfig");
 const express = require("express");
 const { WebClient } = require("@slack/web-api");
 const client_id = process.env.VITE_SLACK_CLIENT_ID;
