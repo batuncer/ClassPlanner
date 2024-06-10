@@ -12,7 +12,6 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../auth/useAutContext';
 import SchoolIcon from '@mui/icons-material/School';
-import AdminButton from './AdminButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
