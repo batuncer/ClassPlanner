@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import axios from "../../utils/axios";
 
@@ -42,7 +42,7 @@ const SignUpLessonButton = (props) => {
                 sessionId: sessionId,
                 role: role,
             };
-            const response = await axios.post("insert-signup", body);
+            await axios.post("insert-signup", body);
             setModalVisible(false);
             alert("You registered successfully. Good luck with your class!");
         } catch (error) {

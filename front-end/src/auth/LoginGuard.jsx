@@ -4,13 +4,13 @@ import { useEffect } from "react";
 
 export default function LoginGuard({ children }) {
     const navigate = useNavigate();
-    const { isInitialized, isAuthenticated } = useAuthContext()
+    const { isAuthenticated } = useAuthContext()
 
     useEffect(() => {
         if (isAuthenticated) {
             navigate("/main")
         }
-    }, [isAuthenticated])
+    }, [isAuthenticated, navigate])
 
     return children
 }

@@ -21,7 +21,6 @@ import Drawer from '@mui/material/Drawer';
 import Hidden from '@mui/material/Hidden'; 
 
 
-const drawerWidth = 240;
 
 
 

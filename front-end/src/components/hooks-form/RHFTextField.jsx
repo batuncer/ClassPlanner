@@ -1,13 +1,13 @@
 // form
 import { useFormContext, Controller } from 'react-hook-form';
 // @mui
-import { TextField, TextFieldProps } from '@mui/material';
+import { TextField } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
 
 export default function RHFTextField({ name, ...other }) {
-  const { control, setValue } = useFormContext();
+  const { control } = useFormContext();
 
   return (
     <Controller

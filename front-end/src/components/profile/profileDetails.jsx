@@ -4,7 +4,7 @@ import SignUpClassesDetails from "./signUpClassesDetails";
 const ProfileDetails = ({ user }) => (
   <div className="profile-details">
     <div className="left-container">
-      <img className="profile-img" src={user.slack_photo_link} alt="Profile Image" />
+      <img className="profile-img" src={user.slack_photo_link} alt="Profile" />
       <table>
         <tbody>
           <tr>

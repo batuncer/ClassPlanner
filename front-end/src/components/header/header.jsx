@@ -13,7 +13,7 @@ const Header = () => {
           <img
             src="https://codeyourfuture.io/wp-content/uploads/2019/03/cyf_brand.png"
             style={{ height: '90px', margin: '5px 0px' }}
-            onClick={handleLogoClick}
+            onClick={handleLogoClick} alt='logo'
           />
           <Typography variant="h2"
             component="div"

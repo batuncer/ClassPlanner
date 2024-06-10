@@ -45,7 +45,7 @@ const SignUpClassesDetails = () => {
                     </div>
                 ))
             ) : (
-                    <div style={{ color:" #36454f"}}>
+                <div style={{ color:" #36454f"}}>
                     You haven't signed up for any classes.
                 </div>
             )}

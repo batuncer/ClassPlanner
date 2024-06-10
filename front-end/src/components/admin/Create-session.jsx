@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from "../../utils/axios";
 import { TextField, Button, Box, Typography, Container, CssBaseline, MenuItem } from '@mui/material';
-import SessionCard from '../classes/Class';
 
 const CreateSession = () => {
   const [date, setDate] = useState('');
