@@ -31,21 +31,24 @@ dotenv.config();
 // });
 
 
-const executeQuery = async (queryString,queryParams)  => {
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 
-  const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false,
-    },
-  });
-
+const executeQuery = async (queryString, queryParams) => {
   const client = await pool.connect();
-  const result = await client.query(queryString,queryParams)
-  client.release()
-
-  return result
-
-}
+  try {
+    const result = await client.query(queryString, queryParams);
+    return result;
+  } catch (error) {
+    console.error('Error executing query:', error);
+    throw error;
+  } finally {
+    client.release();
+  }
+};
 
 module.exports = { executeQuery };

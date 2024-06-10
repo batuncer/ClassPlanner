@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const { pool } = require("../config/dbConfig");
+const { executeQuery } = require("../config/dbConfig");
 
 const transporter = nodemailer.createTransport({
   service: "hotmail",
@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 
 const getUserData = async (userId) => {
   try {
-    const result = await pool.query("SELECT * FROM person WHERE id = $1", [
+    const result = await executeQuery("SELECT * FROM person WHERE id = $1", [
       userId,
     ]);
     return result.rows[0];
@@ -23,7 +23,7 @@ const getUserData = async (userId) => {
 
 const getSessionData = async (sessionId) => {
   try {
-    const result = await pool.query(
+    const result = await executeQuery(
       `SELECT 
          session.*, 
          module.name AS module,

@@ -1,6 +1,6 @@
 const secret = process.env.JWT_SECRET;
 const jwt = require("jsonwebtoken");
-const { pool } = require("../config/dbConfig");
+const { pool , executeQuery} = require("../config/dbConfig");
 
 const createToken = (userId, role) => {
     const token = jwt.sign({ id: userId, roles: role }, secret, {
@@ -16,7 +16,7 @@ const createToken = (userId, role) => {
       const query =
         "SELECT person.slack_firstname, person.slack_lastname, role.name, session.meeting_link, attendance.session_id FROM attendance JOIN person ON attendance.person_id = person.id JOIN role ON attendance.role_id = role.id JOIN session ON attendance.session_id = session.id WHERE person.id = $1";
       // Execute the query
-      const result = await pool.query(query, [userId]);
+      const result = await executeQuery(query, [userId]);
       // Return the rows from the result
       return result;
     } catch (error) {
@@ -26,7 +26,7 @@ const createToken = (userId, role) => {
   };
   
   const createUser = async (img, firstName, lastName,role, email) => {
-    const insertResult = await pool.query(
+    const insertResult = await executeQuery(
       "INSERT INTO person (slack_photo_link, slack_firstname, slack_lastname,  slack_title, slack_email) VALUES ($1, $2, $3, $4, $5) RETURNING id",
       [img, firstName, lastName, role,email]
     );
@@ -48,7 +48,7 @@ const createToken = (userId, role) => {
   const cancelSignUp = async (sessionId, userId) => {
     try {
       //console.log("Canceling sign-up for sessionId:", sessionId, "userId:", userId);
-      await pool.query(
+      await executeQuery(
         "DELETE FROM attendance WHERE person_id = $1 AND session_id = $2",
         [userId, sessionId]
       );
@@ -61,7 +61,7 @@ const createToken = (userId, role) => {
   
   const insertSignUp = async (sessionId, role, userId) => {
     try {
-      await pool.query(
+      await executeQuery(
         "INSERT INTO attendance(person_id, session_id, role_id) VALUES ( $1, $2, $3)",
         [userId, sessionId, role]
       );
