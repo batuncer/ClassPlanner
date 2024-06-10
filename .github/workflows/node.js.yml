@@ -26,12 +26,12 @@ jobs:
 
     - name: Install dependencies
       run: npm ci
-      working-directory: ./Backend
+      working-directory: ./
 
     - name: Build project
       run: npm run build --if-present
-      working-directory: ./Backend
+      working-directory: ./Back-End-Node
 
     - name: Run tests
       run: npm test
-      working-directory: ./Backend
+      working-directory: ./Back-End-Node
