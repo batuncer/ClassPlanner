@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "../../utils/axios"
-import "../../styles/Profile.scss"
+import axios from "../../utils/axios";
+import "../../styles/Profile.scss";
 
 const SignUpClassesDetails = () => {
     const [signUpDetails, setSignUpDetails] = useState([]);
@@ -9,10 +9,10 @@ const SignUpClassesDetails = () => {
         const fetchSignUpDetails = async () => {
             try {
                 const response = await axios.get("/activity");
-                console.log(response)
+                console.log(response);
                 const data = response.data;
                 setSignUpDetails(data);
-                {console.log("data::", data)}
+                console.log("data::", data);
             } catch (error) {
                 console.error("Error fetching sign-up details:", error);
             }
@@ -26,7 +26,7 @@ const SignUpClassesDetails = () => {
             await axios.get(`cancel-signup/${sessionId}`);
 
             setSignUpDetails((prevDetails) =>
-                prevDetails.filter((classDetail) => classDetail.session_id !== sessionId)            
+                prevDetails.filter((classDetail) => classDetail.session_id !== sessionId)
             );
         } catch (error) {
             console.error("Error canceling sign-up:", error);
@@ -45,7 +45,7 @@ const SignUpClassesDetails = () => {
                     </div>
                 ))
             ) : (
-                <div style={{ color:" #36454f"}}>
+                <div style={{ color: " #36454f" }}>
                     You haven't signed up for any classes.
                 </div>
             )}
