@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button } from '@mui/material';
 import Iconify from '../iconify/Iconify';
-import { makeStyles } from "@material-ui/core/styles";
 
 
 const slackClientId = process.env.REACT_APP_SLACK_CLIENT_ID;
