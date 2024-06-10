@@ -1,32 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
-import axios from "../../utils/axios"
+import axios from "../../utils/axios";
 
 const SignUpLessonButton = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedRole, setSelectedRole] = useState('');
     const [availableRoles, setAvailableRoles] = useState([]);
 
-    useEffect(() => {
-        const fetchRole = async () => {
-            try {
-                const response = await axios.get("roles");
-                console.log(response)
-                const data = response.data;
-                setAvailableRoles(data);
-                if (data.length > 0) {
-                    setSelectedRole(data[0].id);
-                }
-            } catch (error) {
-                console.error("Error fetching sign-up details:", error);
+    const fetchRoles = async () => {
+        try {
+            const response = await axios.get("roles");
+            const data = response.data;
+            setAvailableRoles(data);
+            if (data.length > 0) {
+                setSelectedRole(data[0].id);
             }
-        };
-
-        fetchRole();
-    },[props.sessionId]);
+        } catch (error) {
+            console.error("Error fetching sign-up details:", error);
+        }
+    };
 
     const handleButtonClick = () => {
         setModalVisible(true);
+        fetchRoles();
     };
 
     const handleCloseModal = () => {
@@ -45,13 +41,12 @@ const SignUpLessonButton = (props) => {
             const body = {
                 sessionId: sessionId,
                 role: role,
-            }
+            };
             const response = await axios.post("insert-signup", body);
-            const data = response.data;
             setModalVisible(false);
-            alert("You registered succesfully. Good Luck with your class!")
+            alert("You registered successfully. Good luck with your class!");
         } catch (error) {
-            console.error("Error insert sign-up :", error);
+            console.error("Error inserting sign-up:", error);
         }
         console.log("sessionId:", props.sessionId);
     };
