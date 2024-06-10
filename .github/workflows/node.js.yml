@@ -34,7 +34,7 @@ jobs:
 
     - name: Run tests
       run: npm test
-      working-directory: ./backend
+      working-directory: ./Back-End-Node
 
   build-frontend:
     runs-on: ubuntu-latest
