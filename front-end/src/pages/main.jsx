@@ -1,6 +1,5 @@
 // Main.js
 import React, { useState, useEffect } from 'react';
-import Navbar from "../components/barComponents/Navbar";
 import { makeStyles } from '@mui/styles';
 import ClassCard from "../components/classes/ClassCard";
 import UserGuard from "../auth/UserGuard";
@@ -8,7 +7,7 @@ import axios from '../utils/axios';
 import { useAuthContext } from "../auth/useAutContext";
 import Skeleton from '@mui/material/Skeleton';
 import "../styles/ClassCard.scss";
-
+import Navbar from "../components/barComponents/Navbar"
 
 const useStyles = makeStyles((theme) => ({
     root: {

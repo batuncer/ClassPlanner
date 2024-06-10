@@ -109,7 +109,6 @@ const Navbar = ({onChangeSearch,onSelectRegions, hideSearch = false  }) => {
                     </>
 )}
                     <Box sx={{ flexGrow: 1 }} />
-                    <AdminButton />
                     <Hidden mdUp>
                         {/* Only show the hamburger menu on screens below 1000px */}
                         <IconButton size="large" color="inherit" onClick={() => setIsDrawerOpen(true)}>
