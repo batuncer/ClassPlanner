@@ -2,9 +2,9 @@ import React from "react";
 
 const Footer = () => {
     return (
-        <div className="footer" style={{marginTop: "60px"}}>
+        <div className="footer" >
             <p>
-                Copyright © 2023 Baki Tuncer
+                Copyright © 2024 ClassPlanner
             </p>
         </div>
     );

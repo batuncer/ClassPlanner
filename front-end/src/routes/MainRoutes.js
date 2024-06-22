@@ -13,7 +13,7 @@ const MainRoutes = () => {
       <Route path="/main" element={<Main />} />
       <Route path="/login" element={<Login />} />
       <Route path="/profile" element={<Profile />} />
-      <Route path="/admin" element={<CreateSession />} />
+      <Route path="/create" element={<CreateSession />} />
     </Routes>
   );
 };

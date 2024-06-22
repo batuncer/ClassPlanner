@@ -14,8 +14,6 @@ body {
 .App {
 
   flex: 1;
-  min-height: 100vh;
-  /* Set minimum height to fill the viewport */
   text-align: center;
   /* Space for the footer */
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "../../utils/axios";
 import { TextField, Button, Box, Typography, Container, CssBaseline, MenuItem } from '@mui/material';
+import { useAuthContext } from '../../auth/useAutContext';
 
 const CreateSession = () => {
   const [date, setDate] = useState('');
@@ -20,10 +21,12 @@ const CreateSession = () => {
   const [moduleNumbers, setModuleNumbers] = useState([]);
   const [weeks, setWeeks] = useState([]);
   const [sessions, setSessions] = useState([]);
+  const {isAuthenticated}= useAuthContext();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if (isAuthenticated){
         const regionsResponse = await axios.get('/cities');
         setRegions(regionsResponse.data);
 
@@ -38,12 +41,13 @@ const CreateSession = () => {
 
         const weeksResponse = await axios.get('/weeks');
         setWeeks(weeksResponse.data);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
     fetchData();
-  }, []);
+  }, [isAuthenticated]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,7 +69,7 @@ const CreateSession = () => {
       setSessions([...sessions, response.data.session]);
     } catch (error) {
       console.error('Error creating session:', error);
-      alert('Failed to create session.');
+      alert('You must be an admin to create a session.');
     }
   };
 

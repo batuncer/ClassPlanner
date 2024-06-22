@@ -26,15 +26,16 @@ export default function SignUp() {
 
     return (
         <LoginGuard>
-            <Box >
+            <Box  style={{minHeight: 'calc(100vh - 200px)'}}>
                 <div>
                     <SignUpForm handleSignup={handleSignup} handleSlackSignup={handleSlackSignup} handleLogin={handleLogin} />
                 </div>
-                <div style={{ border: "1px solid grey", marginRight: "200px", marginLeft:"200px", marginBottom: "90px" }}></div>
+                <div style={{ border: "1px solid grey", marginRight: "200px", marginLeft:"200px", marginBottom: "90px", marginTop: "90px" }}></div>
                 <div style={{ display: 'flex', gap: '20px', justifyContent: 'center'}}>
-                    <BottomCard h1={"Become a Trainee"} image={"https://img.freepik.com/free-vector/organic-flat-people-business-training_23-2148919413.jpg"} />
-                    <BottomCard h1={"Become a Mentor"} image={"https://assets-global.website-files.com/5ea704591b73e7337746aa7b/639365c66ee8963de7d8e288_How%20to%20Create%20a%20Slack%20Group_%20A%20Painless%20Tutorial-p-800.png"} />
-                    <BottomCard h1={"Employee Wellness"} image={"https://www.culturemonkey.io/employee-engagement/content/images/2023/05/benefits-of-employee-wellness-programs.png"} />
+                    <BottomCard h1={"Become a Trainee"} image={"https://img.freepik.com/free-vector/organic-flat-people-business-training_23-2148919413.jpg"} link={"https://codeyourfuture.io/become-a-student/"}
+ />
+                    <BottomCard h1={"Become a Mentor"} link={"https://codeyourfuture.io/become-a-student/"} image={"https://assets-global.website-files.com/5ea704591b73e7337746aa7b/639365c66ee8963de7d8e288_How%20to%20Create%20a%20Slack%20Group_%20A%20Painless%20Tutorial-p-800.png"} />
+                    <BottomCard h1={"Employee Wellness"} link={"https://codeyourfuture.io/hire-a-graduate/"} image={"https://www.culturemonkey.io/employee-engagement/content/images/2023/05/benefits-of-employee-wellness-programs.png"} />
                 </div>
             </Box>
         </LoginGuard>

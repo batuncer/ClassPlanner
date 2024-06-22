@@ -7,15 +7,16 @@ const Header = () => {
     window.location.href = '/main';
   };
   return (
-    <div>
+    <div className='header'>
       <AppBar position="fixed" >
         <Toolbar style={{ backgroundColor: "white" }}>
-          <img
+          <img  className='logo'
             src="https://codeyourfuture.io/wp-content/uploads/2019/03/cyf_brand.png"
             style={{ height: '90px', margin: '5px 0px' }}
             onClick={handleLogoClick} alt='logo'
           />
-          <Typography variant="h2"
+          <Typography variant="h2" 
+          className="class-planner-title" 
             component="div"
             sx={{
               flexGrow: 1,
@@ -24,7 +25,10 @@ const Header = () => {
               display: 'flex',
               fontFamily: "'Arvo', serif",
               letterSpacing: '-4px',
-              fontWeight: 'bold'
+              fontWeight: 'bold',
+              '@media (max-width: 860px)': {
+                display: 'none',
+              },
             }}>
             Class Planner
           </Typography>

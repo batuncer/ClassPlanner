@@ -61,7 +61,7 @@ export default function MultipleSelectCheckmarks({ onSelectRegions }) {
     };
 
     return (
-        <div>
+        <div >
             <FormControl sx={{ m: 1, width: 300 }}>
                 <InputLabel style={{ color: 'white' }} id="demo-multiple-checkbox-label">
                     Region

@@ -76,7 +76,6 @@ export function AuthProvider({ children }) {
 
             const accessToken = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '';
 
-
             if (accessToken) {
                 setSession(accessToken);
                 const user = JSON.parse(atob(accessToken.split('.')[1]));
@@ -160,13 +159,6 @@ export function AuthProvider({ children }) {
         });
 
         const { token } = response.data;
-
-
-
-        //setSession(data.token.access);
-        //setRefreshSession(data.token.refresh);
-        //data.photoURL = "https://api-dev-minimal-v4.vercel.app/assets/images/avatars/avatar_default.jpg";
-        //setUserSession(data);
         setSession(token);
         dispatch({
             type: TYPE_SUCCESS_REGISTER,
