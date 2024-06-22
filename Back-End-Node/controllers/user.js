@@ -13,7 +13,6 @@ const app = express();
 const slackSingUp = async (req, res) => {
   try {
     const { code } = req.query;
-    console.log(redirect_uri);
     // Exchange the code for an OAuth token
     const result = await client.oauth.v2.access({
       code,
@@ -46,7 +45,7 @@ const slackSingUp = async (req, res) => {
         existingUser.rows[0]["slack_lastname"] !==
           userProfile["profile"]["last_name"]
       ) {
-        updateUser(
+        updateTitle(
           existingUser.rows[0]["id"],
           userProfile["profile"]["last_name"],
           userProfile["profile"]["first_name"],

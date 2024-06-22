@@ -2,11 +2,11 @@ const request = require("supertest");
 const app = require("../server");
 const { beforeAll, afterAll } = require("@jest/globals");
 const nock = require("nock");
-const { pool } = require("../dbConfig");
+const { executeQuery } = require("../config/dbConfig");
 
 
 let token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZXMiOiJtZW50b3IiLCJpYXQiOjE3MDIzOTI2MTUsImV4cCI6MTcwMjQ3OTAxNX0.JTl0Jm0atVu4_tNP1j7LEAm7WLI79VVNobOhIrMcxK4";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZXMiOiJhZG1pbiIsImlhdCI6MTcxOTA1NDExNSwiZXhwIjoxNzE5MTQwNTE1fQ.3J7Ufzfu4xZ3SS7d5AVa7T7QHbtsY7_P3YzGbYnO4CA";
 
 const mockSlackResponse = {
   authed_user: {
@@ -187,5 +187,5 @@ describe("Helper Function Tests", () => {
 afterAll(async () => {
   // Clean up any test-specific database modifications
   // This may involve deleting test users, sessions, etc.
-  await pool.end();
+  await executeQuery.end();
 });

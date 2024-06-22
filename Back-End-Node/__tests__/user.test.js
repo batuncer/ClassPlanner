@@ -1,18 +1,17 @@
-const { pool } = require("../dbConfig");
+const { executeQuery } = require("../config/dbConfig");
 const {
   cancelSignUp,
   getSignUpDetailsFromDatabase,
   insertSignUp,
-  updateUser,
-  createUser,
   updateTitle,
-} = require("../helpers"); 
+  createUser,
+} = require("../services/user"); 
 
 beforeAll(() => {
 });
 
 afterAll(async () => {
-  await pool.end();
+  await executeQuery.end();
 });
 
 describe("cancelSignUp", () => {
@@ -22,7 +21,7 @@ describe("cancelSignUp", () => {
 
     await cancelSignUp(sessionId, userId);
 
-    const checkResult = await pool.query(
+    const checkResult = await executeQuery(
       "SELECT * FROM attendance WHERE person_id = $1 AND session_id = $2",
       [userId, sessionId]
     );
@@ -56,7 +55,7 @@ describe("insertSignUp", () => {
 
     await insertSignUp(sessionId, role, userId);
 
-    const checkResult = await pool.query(
+    const checkResult = await executeQuery(
       "SELECT * FROM attendance WHERE person_id = $1 AND session_id = $2 AND role_id = $3",
       [userId, sessionId, role]
     );
@@ -74,7 +73,7 @@ describe("updateUser", () => {
 
     await updateUser(userId, updatedFirstName, updatedLastName, updatedImg);
 
-    const checkResult = await pool.query("SELECT * FROM person WHERE id = $1", [
+    const checkResult = await executeQuery("SELECT * FROM person WHERE id = $1", [
       userId,
     ]);
 
@@ -101,7 +100,7 @@ describe("createUser", () => {
       newUserEmail
     );
 
-    const checkResult = await pool.query("SELECT * FROM person WHERE id = $1", [
+    const checkResult = await executeQuery("SELECT * FROM person WHERE id = $1", [
       insertResult.rows[0].id,
     ]);
 
@@ -122,7 +121,7 @@ describe("updateTitle", () => {
 
     await updateTitle(userId, updatedTitle);
 
-    const checkResult = await pool.query("SELECT * FROM person WHERE id = $1", [
+    const checkResult = await executeQuery("SELECT * FROM person WHERE id = $1", [
       userId,
     ]);
 
