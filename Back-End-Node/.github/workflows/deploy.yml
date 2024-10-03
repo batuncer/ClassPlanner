@@ -1,0 +1,74 @@
+name: Build on DockerHub & Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+  DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+  AWS_PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          push: true
+          dockerfile: ./Dockerfile 
+          tags: bakituncer/classplanner-backend:latest
+
+  deploy:
+    needs: build  
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set permissions for private key
+        run: |
+          echo "${{ secrets.EC2_PRIVATE_KEY }}" > key.pem
+          chmod 400 key.pem
+
+      - name: Pull Docker image
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem  ubuntu@54.244.193.76 'sudo docker pull bakituncer/classplanner:latest'
+
+      - name: Stop running container
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem  ubuntu@54.244.193.76 'sudo docker stop classplanner || true'
+          ssh -o StrictHostKeyChecking=no -i key.pem  ubuntu@54.244.193.76 'sudo docker rm classplanner || true'
+
+      - name: Run new container
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem  ubuntu@54.244.193.76 'sudo docker run -d \
+           --name classplanner \
+             -p 80:8080 \
+             -e DB_USER=${{ secrets.DB_USER }} \
+             -e DB_PASSWORD=${{secrets.DB_PASSWORD}} \
+             -e DB_HOST=${{secrets.DB_HOST}} \
+             -e DB_PORT=${{secrets.DB_PORT}}  \
+             -e DB_NAME=${{secrets.DB_NAME}}  \
+             bakituncer/classplanner:latest'
